@@ -87,4 +87,3 @@ movieflick/
 - Django REST Framework
 - SQLite (development database)
 - TMDB API
-
