@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Movie, Recommendation
 from .serializers import (
     MovieSerializer,
@@ -185,3 +188,55 @@ def delete_recommendation_view(request, pk):
         {'message': 'Recommendation deleted successfully'},
         status=status.HTTP_200_OK
     )
+
+
+# Template Views for HTML frontend
+@login_required
+def mood_selection_template_view(request):
+    """Template view for mood selection"""
+    moods = Mood.objects.filter(is_active=True)
+    return render(request, 'movies/mood_selection.html', {'moods': moods})
+
+
+@login_required
+def get_recommendations_template_view(request, mood_id):
+    """Template view to get recommendations and display movies"""
+    mood = get_object_or_404(Mood, id=mood_id, is_active=True)
+    
+    try:
+        # Fetch 2 movies from TMDB
+        tmdb_movies_data = TMDBService.fetch_movies_by_mood(mood.name, count=2)
+        
+        if not tmdb_movies_data:
+            messages.error(request, 'No movies found for this mood. Please try again.')
+            return redirect('movies:mood-selection')
+        
+        # Create or update Movie objects and Recommendation objects
+        movies = []
+        
+        for tmdb_movie in tmdb_movies_data:
+            # Create or update movie
+            movie = TMDBService.create_or_update_movie(tmdb_movie)
+            movies.append(movie)
+            
+            # Create recommendation (always create new entry)
+            Recommendation.objects.create(
+                user=request.user,
+                movie=movie,
+                mood=mood,
+                recommended_at=timezone.now()
+            )
+        
+        messages.success(request, f'Found {len(movies)} movies for {mood.name} mood!')
+        return render(request, 'movies/movie_list.html', {'movies': movies, 'mood': mood})
+        
+    except Exception as e:
+        messages.error(request, f'Error fetching movies: {str(e)}')
+        return redirect('movies:mood-selection')
+
+
+@login_required
+def recommendation_history_template_view(request):
+    """Template view for recommendation history"""
+    recommendations = Recommendation.objects.filter(user=request.user).order_by('-recommended_at')
+    return render(request, 'movies/recommendation_history.html', {'recommendations': recommendations})

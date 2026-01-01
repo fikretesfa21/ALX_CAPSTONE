@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Movie Recommendations - Movieflick{% endblock %}
+
+{% block content %}
+<div class="movies-container">
+    <h1 class="movies-title">
+        {% if mood %}
+            {{ mood.emoji }} Movies for {{ mood.name }} Mood
+        {% else %}
+            Movie Recommendations
+        {% endif %}
+    </h1>
+    
+    {% if movies %}
+        <div class="movies-grid">
+            {% for movie in movies %}
+                <div class="movie-card">
+                    {% if movie.poster_url %}
+                        <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="movie-poster">
+                    {% else %}
+                        <div class="movie-poster" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <span>No Poster</span>
+                        </div>
+                    {% endif %}
+                    <div class="movie-info">
+                        <h2 class="movie-title">{{ movie.title }}</h2>
+                        <p class="movie-overview">{{ movie.overview }}</p>
+                        <div class="movie-meta">
+                            <span>{% if movie.release_date %}{{ movie.release_date|date:"Y" }}{% else %}N/A{% endif %}</span>
+                            {% if movie.rating %}
+                                <span class="movie-rating">⭐ {{ movie.rating|floatformat:1 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p class="empty-state-message">No movies found. Try selecting a mood!</p>
+            <a href="{% url 'movies:mood-selection' %}" class="btn-primary" style="display: inline-block; width: auto; margin-top: 1rem;">Select Mood</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

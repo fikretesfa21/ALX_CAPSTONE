@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Select Your Mood - Movieflick{% endblock %}
+
+{% block content %}
+<div class="mood-selection-container">
+    <h1 class="mood-selection-title">How are you feeling?</h1>
+    <p class="mood-selection-subtitle">Choose a mood and we'll recommend movies just for you</p>
+    
+    <div class="moods-grid">
+        {% for mood in moods %}
+            <a href="{% url 'movies:get-recommendations' mood.id %}" class="mood-card">
+                <div class="mood-emoji">{{ mood.emoji }}</div>
+                <div class="mood-name">{{ mood.name }}</div>
+                <div class="mood-description">{{ mood.description }}</div>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

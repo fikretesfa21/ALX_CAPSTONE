@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}My Recommendation History - Movieflick{% endblock %}
+
+{% block content %}
+<div class="history-container">
+    <h1 class="history-title">My Recommendation History</h1>
+    
+    {% if recommendations %}
+        <div class="history-list">
+            {% for recommendation in recommendations %}
+                <div class="history-item">
+                    {% if recommendation.movie.poster_url %}
+                        <img src="{{ recommendation.movie.poster_url }}" alt="{{ recommendation.movie.title }}" class="history-poster">
+                    {% else %}
+                        <div class="history-poster" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <span>No Poster</span>
+                        </div>
+                    {% endif %}
+                    <div class="history-content">
+                        <h2 class="history-movie-title">{{ recommendation.movie.title }}</h2>
+                        <span class="history-mood">{{ recommendation.mood.emoji }} {{ recommendation.mood.name }}</span>
+                        <p class="movie-overview">{{ recommendation.movie.overview|truncatewords:30 }}</p>
+                        <div class="movie-meta">
+                            <span class="history-date">Recommended on: {{ recommendation.recommended_at|date:"F d, Y g:i A" }}</span>
+                            {% if recommendation.movie.rating %}
+                                <span class="movie-rating">⭐ {{ recommendation.movie.rating|floatformat:1 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p class="empty-state-message">You haven't received any recommendations yet.</p>
+            <a href="{% url 'movies:mood-selection' %}" class="btn-primary" style="display: inline-block; width: auto; margin-top: 1rem;">Get Recommendations</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
