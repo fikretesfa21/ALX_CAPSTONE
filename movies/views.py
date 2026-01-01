@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 from .models import Movie, Recommendation
 from .serializers import (
     MovieSerializer,
@@ -12,8 +13,10 @@ from .serializers import (
 )
 from .services import TMDBService
 from moods.models import Mood
+from moods.serializers import MoodSerializer
 
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def recommend_movies_view(request):
@@ -21,7 +24,14 @@ def recommend_movies_view(request):
     Get movie recommendations based on mood
     Fetches 2 movies from TMDB and creates recommendations
     """
-    serializer = RecommendationCreateSerializer(data=request.data)
+    # Handle both JSON and form-encoded data
+    data = request.data
+    
+    # If data is a QueryDict (from form), convert to dict
+    if hasattr(data, 'get'):
+        data = dict(data)
+    
+    serializer = RecommendationCreateSerializer(data=data)
     if not serializer.is_valid():
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -137,6 +147,7 @@ def recommendation_detail_view(request, pk):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def mark_recommendation_viewed_view(request, pk):
@@ -156,6 +167,7 @@ def mark_recommendation_viewed_view(request, pk):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@csrf_exempt
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_recommendation_view(request, pk):
