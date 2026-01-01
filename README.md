@@ -124,6 +124,7 @@ The application will be available at `http://127.0.0.1:8000/`
 ### API Endpoints (JSON)
 
 #### Authentication
+
 - `POST /api/auth/register/` - Register a new user
 - `POST /api/auth/login/` - Login user
 - `POST /api/auth/logout/` - Logout user
@@ -131,10 +132,12 @@ The application will be available at `http://127.0.0.1:8000/`
 - `PUT /api/auth/profile/` - Update user profile
 
 #### Moods
+
 - `GET /api/moods/` - List all active moods
 - `GET /api/moods/<id>/` - Get mood details
 
 #### Movies
+
 - `GET /api/movies/` - List all movies
 - `GET /api/movies/<id>/` - Get movie details
 - `POST /api/movies/recommend/` - Get movie recommendations by mood
@@ -145,12 +148,14 @@ The application will be available at `http://127.0.0.1:8000/`
   ```
 
 #### Recommendations
+
 - `GET /api/movies/recommendations/` - Get user's recommendation history
 - `GET /api/movies/recommendations/<id>/` - Get recommendation details
 - `POST /api/movies/recommendations/<id>/view/` - Mark recommendation as viewed
 - `DELETE /api/movies/recommendations/<id>/delete/` - Delete recommendation
 
 ### Mood IDs
+
 - 1 = Happy (Comedy, Animation)
 - 2 = Sad (Drama, Romance)
 - 3 = Excited (Action, Adventure, Thriller)
@@ -162,6 +167,7 @@ The application will be available at `http://127.0.0.1:8000/`
 ### Using curl
 
 **Register:**
+
 ```bash
 curl -X POST http://127.0.0.1:8000/api/auth/register/ \
   -H "Content-Type: application/json" \
@@ -169,6 +175,7 @@ curl -X POST http://127.0.0.1:8000/api/auth/register/ \
 ```
 
 **Login:**
+
 ```bash
 curl -X POST http://127.0.0.1:8000/api/auth/login/ \
   -H "Content-Type: application/json" \
@@ -177,6 +184,7 @@ curl -X POST http://127.0.0.1:8000/api/auth/login/ \
 ```
 
 **Get Recommendations:**
+
 ```bash
 curl -X POST http://127.0.0.1:8000/api/movies/recommend/ \
   -H "Content-Type: application/json" \
@@ -195,9 +203,6 @@ Navigate to any API endpoint in your browser (e.g., `http://127.0.0.1:8000/api/m
 - **Dual Views:** Both API (JSON) and template (HTML) views coexist
 - **Simple Frontend:** Clean HTML with Django template tags, basic CSS (no JavaScript frameworks)
 - **Session Authentication:** Django's built-in session authentication for both API and templates
-
-
-
 
 ## Author
 

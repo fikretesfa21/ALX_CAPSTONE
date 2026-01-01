@@ -1,0 +1,47 @@
+[33mcommit d286a4098519136382184402057bfa2f12c9e0c8[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: fikretesfa21 <fikremariamdebela8@gmail.com>
+Date:   Thu Jan 1 20:12:43 2026 +0300
+
+    Movies API - Recommendation endpoint, list movies, history endpoints
+
+[33mcommit 12da7411ce521f7cd8516d9182fa88c06e9c6116[m
+Author: fikretesfa21 <fikremariamdebela8@gmail.com>
+Date:   Thu Jan 1 20:10:10 2026 +0300
+
+    TMDB Integration - Service class for fetching 2 movies by mood
+
+[33mcommit e4fc3841e1de1ca8866775d5bdb98d6e0e90e80d[m
+Author: fikretesfa21 <fikremariamdebela8@gmail.com>
+Date:   Thu Jan 1 20:09:01 2026 +0300
+
+    Moods API - List and detail endpoints for moods
+
+[33mcommit 76b9d3d1a1bd30023f0cf97460708fbde3cd7ddd[m
+Author: fikretesfa21 <fikremariamdebela8@gmail.com>
+Date:   Thu Jan 1 20:08:00 2026 +0300
+
+    setup for the authentication api endpoints with the login , logout , profile
+
+[33mcommit 96a22b072acd604ce37e00a350d7839f3e97f4c1[m
+Author: fikretesfa21 <fikremariamdebela8@gmail.com>
+Date:   Thu Jan 1 20:06:30 2026 +0300
+
+    i have directly seeded the moods in to the project since they are going to be static
+
+[33mcommit 30353edf3d03c09fc1f2a5568e0cf418191adbe6[m
+Author: fikretesfa21 <fikremariamdebela8@gmail.com>
+Date:   Thu Jan 1 20:05:06 2026 +0300
+
+    added the models and made migrations
+
+[33mcommit 3cbebf344d9d65eeee35fdf62c1c321552555fe8[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: fikretesfa21 <fikremariamdebela8@gmail.com>
+Date:   Thu Jan 1 19:40:10 2026 +0300
+
+    updated the readme
+
+[33mcommit 8b9d2277e580f9e12e12d4f66887042ee5e2404b[m
+Author: fikretesfa21 <fikremariamdebela8@gmail.com>
+Date:   Thu Jan 1 19:37:25 2026 +0300
+
+    Initial project setup
